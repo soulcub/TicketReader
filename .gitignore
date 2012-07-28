@@ -13,3 +13,4 @@ gen/
 local.properties
 /.classpath
 /.project
+/garbage/

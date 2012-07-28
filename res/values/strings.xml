@@ -1,9 +1,12 @@
 <resources>
 
-    <string name="app_name">TicketReader</string>
+    <string name="app_name">Ticket Reader</string>
     <string name="hello_world">Hello world!</string>
     <string name="menu_settings">Settings</string>
-    <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_main">Ticket Reader</string>
     <string name="run_button">Run</string>
+    <string name="camera_test_button">Test</string>
+    <string name="edit_message">Touch to edit</string>
+    <string name="test_camera">testCamera</string>
     
 </resources>

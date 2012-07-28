@@ -1,0 +1,68 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal" >
+
+    <EditText
+        android:id="@+id/EditFieldId"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:hint="@string/edit_message" />
+    
+    <Button
+        android:id="@+id/RunButtonId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="sendMessage"
+        android:text="@string/run_button" />
+
+    <Button
+        android:id="@+id/TestButtonId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="@string/test_camera"
+        android:text="@string/camera_test_button" />
+
+</LinearLayout>
+
+<!-- <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:padding="@dimen/padding_medium"
+        android:text="@string/hello_world"
+        tools:context=".MainActivity" />
+
+    <Button
+        android:id="@+id/run_button"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@id/textView1"
+        android:layout_alignParentTop="true"
+        android:layout_alignRight="@id/textView1"
+        android:layout_marginTop="31dp"
+        android:onClick="@string/run_button"
+        android:text="@string/run_button" />
+
+    <ImageView
+        android:id="@+id/result"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignRight="@id/textView1"
+        android:layout_below="@id/textView1"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="14dp"
+        android:src="@drawable/ic_launcher" />
+</RelativeLayout> -->
