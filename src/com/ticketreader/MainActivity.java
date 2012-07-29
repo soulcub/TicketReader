@@ -12,8 +12,6 @@ import com.ticketreader.surface.camera.MakePhotoActivity;
 public class MainActivity extends Activity {
 
 	private static final int REQUEST_CODE = 1;
-	// private Bitmap bitmap;
-	// private ImageView imageView;
 
 	public final static String EXTRA_MESSAGE = "com.ticketreader.MainActivity.EditTextMessage";
 
