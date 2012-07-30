@@ -8,5 +8,6 @@
     <string name="camera_test_button">Test</string>
     <string name="edit_message">Touch to edit</string>
     <string name="test_camera">testCamera</string>
+    <string name="image_preview">imagePreview</string>
     
 </resources>

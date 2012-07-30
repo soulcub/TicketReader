@@ -29,7 +29,10 @@
 		    android:name="com.ticketreader.surface.camera.MakePhotoActivity" 
 		    android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen"
 		    android:screenOrientation="portrait" />
-        <activity android:name="com.ticketreader.DisplayMessageActivity" />
+        <activity 
+            android:name=".surface.pictureViewer.DisplayMessageActivity"
+		    android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen"
+		    android:screenOrientation="portrait" />
         
 	</application>
 

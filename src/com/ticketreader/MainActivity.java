@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.EditText;
 
 import com.ticketreader.surface.camera.MakePhotoActivity;
+import com.ticketreader.surface.pictureViewer.DisplayMessageActivity;
 
 public class MainActivity extends Activity {
 
