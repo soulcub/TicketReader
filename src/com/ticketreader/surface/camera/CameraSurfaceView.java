@@ -12,10 +12,9 @@ import android.hardware.Camera.PictureCallback;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
-import android.widget.EditText;
 
-import com.ticketreader.DisplayMessageActivity;
-import com.ticketreader.R;
+import com.ticketreader.surface.pictureViewer.DisplayMessageActivity;
+import com.ticketreader.utils.Utils;
 
 public class CameraSurfaceView extends SurfaceView implements SurfaceHolder.Callback, AutoFocusCallback {
 	private static final String LOG_TAG = "CameraSurfaceView";
@@ -38,7 +37,6 @@ public class CameraSurfaceView extends SurfaceView implements SurfaceHolder.Call
 		super(context);
 
 		this.parentActivity = parentActivity;
-		// Initiate the Surface Holder properly
 		this.holder = this.getHolder();
 		this.holder.addCallback(this);
 	}
@@ -56,8 +54,6 @@ public class CameraSurfaceView extends SurfaceView implements SurfaceHolder.Call
 
 	@Override
 	public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
-		// Now that the size is known, set up the camera parameters and begin
-		// the preview.
 		if (camera == null)
 			return;
 
@@ -80,7 +76,6 @@ public class CameraSurfaceView extends SurfaceView implements SurfaceHolder.Call
 				cameraParameters = camera.getParameters();
 				break;
 			} catch (RuntimeException rx) {
-				// ups, camera did not like this size
 				Log.d(LOG_TAG, "...barfed, try next");
 			}
 
@@ -91,8 +86,6 @@ public class CameraSurfaceView extends SurfaceView implements SurfaceHolder.Call
 
 	@Override
 	public void surfaceDestroyed(SurfaceHolder holder) {
-		// Surface will be destroyed when replaced with a new screen
-		// Always make sure to release the Camera instance
 		if (camera == null)
 			return;
 		releaseCamera();
@@ -103,6 +96,8 @@ public class CameraSurfaceView extends SurfaceView implements SurfaceHolder.Call
 	}
 	
 	public void releaseCamera() {
+		if (camera == null) 
+			return;
 		camera.stopPreview();
 		camera.release();
 		camera = null;
@@ -124,7 +119,7 @@ public class CameraSurfaceView extends SurfaceView implements SurfaceHolder.Call
 	}
 
 	@Override
-	public void onAutoFocus(boolean result, Camera camera) {
+	public void onAutoFocus(boolean result, final Camera camera) {
 		Log.d(LOG_TAG, "autofocus callback received");
 		focusState = result;
 		waitingForFocus = false;
@@ -132,6 +127,7 @@ public class CameraSurfaceView extends SurfaceView implements SurfaceHolder.Call
 		PictureCallback jpeg = new PictureCallback() {
 			@Override
 			public void onPictureTaken(byte[] arg0, Camera arg1) {
+				camera.stopPreview();
 				pictureTaken(arg0);
 			}
 		};
@@ -142,7 +138,8 @@ public class CameraSurfaceView extends SurfaceView implements SurfaceHolder.Call
 	public void pictureTaken(byte[] arg0) {
 		pictureFromCamera = arg0;
 		Intent intent = new Intent(parentActivity, DisplayMessageActivity.class);
-		intent.putExtra(EXTRA_PICTURE_MESSAGE, arg0);
+		Utils.image = arg0;
+		intent.putExtra(EXTRA_PICTURE_MESSAGE, "");
 		parentActivity.startActivity(intent);
 	}
 }

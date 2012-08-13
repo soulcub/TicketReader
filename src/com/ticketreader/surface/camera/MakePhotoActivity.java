@@ -31,4 +31,11 @@ public class MakePhotoActivity extends Activity {
 		cameraSurfaceView.doAutofocus();
 		return result;
 	}
+	
+	@Override
+	protected void onDestroy() {
+		cameraSurfaceView.releaseCamera();
+		super.onDestroy();
+	}
+	
 }
