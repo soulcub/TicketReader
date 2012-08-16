@@ -1,14 +1,18 @@
 package com.ticketreader;
 
+import java.util.ArrayList;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
 import android.view.Menu;
 import android.view.View;
 import android.widget.EditText;
 
+import com.ticketreader.mathcore.Range;
+import com.ticketreader.mathcore.RangeManager;
 import com.ticketreader.surface.camera.MakePhotoActivity;
-import com.ticketreader.surface.pictureViewer.DisplayMessageActivity;
 
 public class MainActivity extends Activity {
 
@@ -59,12 +63,25 @@ public class MainActivity extends Activity {
 
 	/** Called when the user selects the Run button */
 	public void sendMessage(View view) {
-		Intent intent = new Intent(this, DisplayMessageActivity.class);
-		EditText editText = (EditText) findViewById(R.id.EditFieldId);
-		String message = editText.getText().toString();
-		intent.putExtra(EXTRA_MESSAGE, message);
-		startActivity(intent);
-		s.kjflskj;
+//		Intent intent = new Intent(this, DisplayMessageActivity.class);
+//		EditText editText = (EditText) findViewById(R.id.EditFieldId);
+//		String message = editText.getText().toString();
+//		intent.putExtra(EXTRA_MESSAGE, message);
+//		startActivity(intent);
+		RangeManager rm = new RangeManager();
+		ArrayList<Range> rangeList = rm.getRangeList();
+		
+		EditText editField = (EditText)findViewById(R.id.EditFieldId);
+		String str = editField.getText().toString();
+		for(Range range: rangeList){
+			int rez = range.getRange().indexOf(str);
+			if(rez < 0){
+				editField.setText("Fuck");
+			}
+			else{
+				editField.setText("Good");
+			}
+		}
 	}
 
 	/** Called when the user selects the Test button */
