@@ -47,9 +47,11 @@ public class TouchProcessor {
 		
 		switch (pointsCount) {
 		case ONE_TOUCH:
+			Log.d(LOG_TAG, "ONE_TOUCH case");
 			touchProcess(imageView, pointsCount, action, event);
 			break;
 		case MULTI_TOUCH:
+			Log.d(LOG_TAG, "MULTI_TOUCH case");
 			multiTouchProcess(imageView, pointsCount, action, event);
 			break;
 		default:
@@ -77,7 +79,6 @@ public class TouchProcessor {
 				oneTouchPerformed = false;
 				firstScale = imageView.getScaleX();
 				firstTouchDistance = (float) Math.sqrt( (x[1] - x[0])*(x[1] - x[0]) + (y[1] - y[0])*(y[1] - y[0]) );
-				Log.d(LOG_TAG, "Id(" + id + ") - " + "ACTION_DOWN_MOUTLITOUCH " + event.getActionIndex());
 				break;
 			case MotionEvent.ACTION_MOVE:
 				scale = firstScale;
@@ -90,7 +91,6 @@ public class TouchProcessor {
 					imageView.setScaleX(scale);
 					imageView.setScaleY(scale);
 				}
-				Log.d(LOG_TAG, "Id(" + id + ") - " + "ACTION_MOVE_MOUTLITOUCH " + event.getActionIndex());
 				break;
 			case MotionEvent.ACTION_POINTER_1_UP:
 			case MotionEvent.ACTION_POINTER_2_UP:
@@ -99,7 +99,6 @@ public class TouchProcessor {
 				if (Utils.equalsAll(touches, false))
 					multiTouchPerformed = false;
 				firstTouchDistance = 0;
-				Log.d(LOG_TAG, "Id(" + id + ") - " + "ACTION_UP_MOUTLITOUCH " + event.getActionIndex());
 				break;
 			default:
 				break;
@@ -111,6 +110,9 @@ public class TouchProcessor {
 		if (multiTouchPerformed)
 			return;
 		
+		float diffX;
+		float diffY;
+
 		int id = event.getPointerId(0);
 		x[id] = (int)event.getX();
 		y[id] = (int)event.getY();
@@ -121,19 +123,23 @@ public class TouchProcessor {
 			firstTouchY[id] = y[id];
 			firstTouchImageX = imageView.getX();
 			firstTouchImageY = imageView.getY();
-			Log.d(LOG_TAG, "Id(" + id + ") - " + "ACTION_DOWN " + event.getActionIndex());
 			break;
 		case MotionEvent.ACTION_MOVE:
+			if (!oneTouchPerformed)
+				break;
 			currentX = firstTouchImageX;
 			currentY = firstTouchImageY;
 			
-			float diffX = firstTouchX[id] - x[id];
-			float diffY = firstTouchY[id] - y[id];
+			diffX = firstTouchX[id] - x[id];
+			diffY = firstTouchY[id] - y[id];
 			
 			currentX -= diffX;
 			currentY -= diffY;
-			
-			Log.d(LOG_TAG, "Id(" + id + ") - " + "ACTION_MOVE " + event.getActionIndex());
+			if (currentX <= 0)
+				currentX = 0;
+			if (currentY <= 0)
+				currentY = 0;
+
 			break;
 		case MotionEvent.ACTION_UP:
 			if (!oneTouchPerformed)
@@ -141,28 +147,12 @@ public class TouchProcessor {
 			oneTouchPerformed = false;
 			firstTouchX[id] = currentX;
 			firstTouchY[id] = currentY;
-			Log.d(LOG_TAG, "Id(" + id + ") - " + "ACTION_UP " + event.getActionIndex());
 			break;
 		case MotionEvent.ACTION_CANCEL:
-			Log.d(LOG_TAG, "Id(" + id + ") - " + "ACTION_CANCEL");
 			break;
 		default:
-			Log.d(LOG_TAG, "Id(" + id + ") - " + "Action: " + action);
 			break;
 		}
-		
-		
-		
-//		if ((action == MotionEvent.ACTION_DOWN) || (action == MotionEvent.ACTION_POINTER_DOWN)
-//				|| (action == MotionEvent.ACTION_MOVE)) {
-//			touching[id] = true;
-//		} else {
-//			touching[id] = false;
-//		}
-//		
-//		float pointsDistance = 500 / (float) Math.sqrt( (x[1] - x[0])*(x[1] - x[0]) + (y[1] - y[0])*(y[1] - y[0]) );
-//		
-//		currentX += pointsDistance;
 		
 		imageView.setX(currentX);
 		imageView.setY(currentY);
