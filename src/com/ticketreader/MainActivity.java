@@ -4,13 +4,13 @@ import java.util.ArrayList;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 
+import com.ticketreader.managers.DataManager;
 import com.ticketreader.mathcore.Range;
 import com.ticketreader.mathcore.RangeManager;
 import com.ticketreader.surface.camera.MakePhotoActivity;
@@ -26,14 +26,32 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
 		
-		//loading range's formulas
-		
+		DataManager.instance().init(this);
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.activity_main, menu);
-		return true;
+//		getMenuInflater().inflate(R.menu.activity_main, menu);
+		
+		menu.add(0, 0, 0, "Ranges");
+		
+		return super.onCreateOptionsMenu(menu);
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item){
+		switch(item.getItemId()){
+		case 0:
+			Intent intent = new Intent(this, RangeListActivity.class);
+			startActivity(intent);
+			break;
+			
+		default:
+			break;
+			
+		}
+		
+		return super.onOptionsItemSelected(item);
 	}
 
 	public void pickImage(View View) {
